@@ -168,6 +168,7 @@
       <a href="#state"    class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Pipeline</a>
       <a href="#cost"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Spend</a>
       <a href="#work"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Work</a>
+      <a href="#funbrews"    class="rounded-lg px-3 py-1.5 text-warn-soft hover:bg-elevated">FunBrews ✨</a>
       <a href="#mobile"      class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Mobile</a>
       <a href="#memory"      class="rounded-lg px-3 py-1.5 text-ok-soft hover:bg-elevated">Memory</a>
       <a href="#sovereignty" class="rounded-lg px-3 py-1.5 text-info-soft hover:bg-elevated">Sovereignty</a>
@@ -321,58 +322,58 @@
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3">
 
-            <!-- Magic 1: Order Pizza -->
+            <!-- Magic 1: Weekly review -->
             <button class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
-              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-warn/20 blur-3xl group-hover:bg-warn/30 transition"></div>
+              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-brand/20 blur-3xl group-hover:bg-brand/30 transition" aria-hidden="true"></div>
               <div class="relative">
-                <div class="text-3xl mb-3 leading-none">🍕</div>
-                <div class="font-semibold text-[15px]">Order Pizza</div>
-                <div class="text-[11px] text-ink-4 mt-1 leading-snug">Your usual · Mario&apos;s · ~30 min</div>
-                <div class="mt-3 text-[10px] text-warn-soft flex items-center gap-1">
-                  <span class="size-1 rounded-full bg-warn"></span>
-                  Pepper knows the order
-                </div>
-              </div>
-            </button>
-
-            <!-- Magic 2: Text wife -->
-            <button class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
-              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-alert/20 blur-3xl group-hover:bg-alert/30 transition"></div>
-              <div class="relative">
-                <div class="text-3xl mb-3 leading-none">☕</div>
-                <div class="font-semibold text-[15px]">Text wife for coffee</div>
-                <div class="text-[11px] text-ink-4 mt-1 leading-snug">Drafted in your voice · Revolver</div>
-                <div class="mt-3 text-[10px] text-alert-soft flex items-center gap-1">
-                  <span class="size-1 rounded-full bg-alert"></span>
-                  Pepper checks her cal first
-                </div>
-              </div>
-            </button>
-
-            <!-- Magic 3: Sunday review -->
-            <button class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
-              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-brand/20 blur-3xl group-hover:bg-brand/30 transition"></div>
-              <div class="relative">
-                <div class="text-3xl mb-3 leading-none">📊</div>
+                <div class="text-3xl mb-3 leading-none" aria-hidden="true">📊</div>
                 <div class="font-semibold text-[15px]">Run my weekly review</div>
                 <div class="text-[11px] text-ink-4 mt-1 leading-snug">Pulls CHANGELOG, runs, calendar</div>
                 <div class="mt-3 text-[10px] text-brand-soft flex items-center gap-1">
-                  <span class="size-1 rounded-full bg-brand"></span>
-                  20-line brief ready in ~minute
+                  <span class="size-1 rounded-full bg-brand" aria-hidden="true"></span>
+                  20-line brief in ~minute
                 </div>
               </div>
             </button>
 
-            <!-- Magic 4: Pack for trip -->
+            <!-- Magic 2: Pack for trip -->
             <button class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
-              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-info/20 blur-3xl group-hover:bg-info/30 transition"></div>
+              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-info/20 blur-3xl group-hover:bg-info/30 transition" aria-hidden="true"></div>
               <div class="relative">
-                <div class="text-3xl mb-3 leading-none">🧳</div>
+                <div class="text-3xl mb-3 leading-none" aria-hidden="true">🧳</div>
                 <div class="font-semibold text-[15px]">Pack for Singapore</div>
                 <div class="text-[11px] text-ink-4 mt-1 leading-snug">Reads weather, meetings, dress code</div>
                 <div class="mt-3 text-[10px] text-info-soft flex items-center gap-1">
-                  <span class="size-1 rounded-full bg-info"></span>
-                  Generates check-list + outfit plan
+                  <span class="size-1 rounded-full bg-info" aria-hidden="true"></span>
+                  Check-list + outfit plan
+                </div>
+              </div>
+            </button>
+
+            <!-- Magic 3: Draft funder updates -->
+            <button data-magic="draft-funder-updates" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-ok/20 blur-3xl group-hover:bg-ok/30 transition" aria-hidden="true"></div>
+              <div class="relative">
+                <div class="text-3xl mb-3 leading-none" aria-hidden="true">✏️</div>
+                <div class="font-semibold text-[15px]">Draft funder updates</div>
+                <div class="text-[11px] text-ink-4 mt-1 leading-snug">Belle writes 5 in your voice</div>
+                <div class="mt-3 text-[10px] text-ok-soft flex items-center gap-1">
+                  <span class="size-1 rounded-full bg-ok" aria-hidden="true"></span>
+                  Lands in review queue
+                </div>
+              </div>
+            </button>
+
+            <!-- Magic 4: Pipeline health -->
+            <button data-magic="pipeline-check" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+              <div class="absolute -top-8 -right-8 size-28 rounded-full bg-warn/20 blur-3xl group-hover:bg-warn/30 transition" aria-hidden="true"></div>
+              <div class="relative">
+                <div class="text-3xl mb-3 leading-none" aria-hidden="true">🚀</div>
+                <div class="font-semibold text-[15px]">Pipeline health check</div>
+                <div class="text-[11px] text-ink-4 mt-1 leading-snug">12 active · 3 deadline-cliffs</div>
+                <div class="mt-3 text-[10px] text-warn-soft flex items-center gap-1">
+                  <span class="size-1 rounded-full bg-warn" aria-hidden="true"></span>
+                  30-sec brief
                 </div>
               </div>
             </button>
@@ -2543,6 +2544,160 @@
 </section>
 
 <!-- ============================================ -->
+<!-- 5b. FUNBREWS — personal-life magic            -->
+<!-- ============================================ -->
+<section id="funbrews" aria-labelledby="funbrews-heading">
+  <div class="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+    <div>
+      <h2 id="funbrews-heading" class="text-xs font-medium text-ink-4 uppercase tracking-[0.18em]">FunBrews ✨ · the rest of your life</h2>
+      <p class="mt-1.5 text-sm text-ink-3">Pepper handles the personal-life chain too. One tap, full context — wife&apos;s calendar, kids&apos; mood, your saved orders, Mom&apos;s timezone, what&apos;s in the fridge.</p>
+    </div>
+    <div class="flex items-center gap-2 text-[11px] text-ink-4">
+      <span class="size-1.5 rounded-full bg-warn live-dot" aria-hidden="true"></span>
+      <span>Pepper learned 12 family preferences this week</span>
+    </div>
+  </div>
+
+  <div class="rounded-[28px] bg-gradient-to-br from-warn/8 via-alert/5 to-brand/8 shadow-float p-6 sm:p-8 border border-warn/15">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+
+      <!-- 1. Order Pizza -->
+      <button data-magic="order-pizza" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-warn/25 blur-3xl group-hover:bg-warn/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🍕</div>
+          <div class="font-semibold text-[15px]">Order Pizza</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Mario&apos;s · usual · ~30 min · Visa-4823</div>
+        </div>
+      </button>
+
+      <!-- 2. Text wife for coffee -->
+      <button data-magic="text-wife" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-alert/25 blur-3xl group-hover:bg-alert/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">☕</div>
+          <div class="font-semibold text-[15px]">Text wife for coffee</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Checks her cal first · Revolver · in your voice</div>
+        </div>
+      </button>
+
+      <!-- 3. Plan date night -->
+      <button data-magic="date-night" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-alert/25 blur-3xl group-hover:bg-alert/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🌹</div>
+          <div class="font-semibold text-[15px]">Plan date night</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Friday slot · books reservation + sitter</div>
+        </div>
+      </button>
+
+      <!-- 4. Find a gift -->
+      <button data-magic="find-gift" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-warn/25 blur-3xl group-hover:bg-warn/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🎁</div>
+          <div class="font-semibold text-[15px]">Find a thoughtful gift</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Reads her IG saves + your last 3 hits</div>
+        </div>
+      </button>
+
+      <!-- 5. Cook with what's in fridge -->
+      <button data-magic="cook-fridge" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-ok/25 blur-3xl group-hover:bg-ok/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🍽️</div>
+          <div class="font-semibold text-[15px]">Cook with what&apos;s in the fridge</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Suggests 3 recipes from groceries-cam</div>
+        </div>
+      </button>
+
+      <!-- 6. Call Mom -->
+      <button data-magic="call-mom" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-info/25 blur-3xl group-hover:bg-info/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">📞</div>
+          <div class="font-semibold text-[15px]">Call Mom</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Knows her timezone · WhatsApp dial-in</div>
+        </div>
+      </button>
+
+      <!-- 7. Movie night pick -->
+      <button data-magic="movie-night" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-brand/25 blur-3xl group-hover:bg-brand/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🎬</div>
+          <div class="font-semibold text-[15px]">Movie night pick</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">3 family-rated picks · streams ready</div>
+        </div>
+      </button>
+
+      <!-- 8. Surprise the kids -->
+      <button data-magic="surprise-kids" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-warn/25 blur-3xl group-hover:bg-warn/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🌟</div>
+          <div class="font-semibold text-[15px]">Surprise the kids</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Ice cream · movie kit · or your call</div>
+        </div>
+      </button>
+
+      <!-- 9. Stock the pantry -->
+      <button data-magic="stock-pantry" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-ok/25 blur-3xl group-hover:bg-ok/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🛒</div>
+          <div class="font-semibold text-[15px]">Stock the pantry</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Weekly groceries · learned the staples</div>
+        </div>
+      </button>
+
+      <!-- 10. Gym with Tariq -->
+      <button data-magic="gym-tariq" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-info/25 blur-3xl group-hover:bg-info/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">💪</div>
+          <div class="font-semibold text-[15px]">Gym with Tariq</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Texts him · checks his cal · picks a time</div>
+        </div>
+      </button>
+
+      <!-- 11. Set the mood -->
+      <button data-magic="set-mood" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-brand/25 blur-3xl group-hover:bg-brand/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🎵</div>
+          <div class="font-semibold text-[15px]">Set the mood</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Playlist for whatever you&apos;re doing</div>
+        </div>
+      </button>
+
+      <!-- 12. Plan family weekend -->
+      <button data-magic="plan-weekend" class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
+        <div class="absolute -top-8 -right-8 size-28 rounded-full bg-alert/25 blur-3xl group-hover:bg-alert/35 transition" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="text-4xl mb-3 leading-none" aria-hidden="true">🗓️</div>
+          <div class="font-semibold text-[15px]">Plan family weekend</div>
+          <div class="text-[11px] text-ink-4 mt-1 leading-snug">Weather + kids&apos; energy + budget</div>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- Add your own -->
+    <div class="mt-5 rounded-2xl bg-elevated/40 border-2 border-dashed border-line p-4 flex items-center gap-4">
+      <div class="size-10 rounded-xl bg-line flex items-center justify-center text-ink-3" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" class="size-5"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+      <div class="flex-1">
+        <div class="font-semibold text-sm">Add your own FunBrew</div>
+        <p class="text-[12px] text-ink-4">Just describe it: "every Sunday text my brother", "remind me to call Dad before his shift", "order halal meat from <em>Sufi&apos;s</em> when we run low". Pepper builds the chain.</p>
+      </div>
+      <button class="rounded-lg bg-elevated px-3 py-2 text-xs text-ink-2 hover:bg-line">Create</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
 <!-- 6. MEMORY (the "one thing" — cognitive memory) -->
 <!-- ============================================ -->
 <section id="memory" aria-labelledby="memory-heading">
@@ -2922,10 +3077,27 @@
   }
 
   var MAGIC = {
+    // Work magic (Today)
+    'weekly-review':         "📊 Pulling 7 days of CHANGELOG + runs + calendar + email. 20-line brief landing in your Drive · Briefings folder.",
+    'pack-singapore':        "🧳 Packing list generated. Singapore 28C humid, 2 funder meetings (smart casual), 1 dinner (smart). Drafted in your Notes.",
+    'draft-funder-updates':  "✏️ Belle is drafting 5 funder updates · CRRF, Vancouver Foundation, PCH, Jamiyah, SAFEPOINT · in your review queue.",
+    'pipeline-check':        "🚀 247 prospects · 178 active · 12 in-flight grants · 3 deadline-cliffs (CRRF 11d, BC Multi 13d, MARP 24d). Brief in 30 sec.",
+
+    // FunBrews (personal life)
     'order-pizza':    "🍕 Pepper ordering your usual from Mario's - 1 large veggie, 1 cheese - ETA 28 min - paying with Visa ending 4823. Cancel anytime.",
     'text-wife':      "☕ Pepper sent: 'Hey love, free for a coffee at Revolver in 25?' She read it 2 sec ago - she's typing.",
-    'weekly-review':  "📊 Pulling 7 days of CHANGELOG + runs + calendar + email. 20-line brief landing in your Drive · Briefings folder.",
-    'pack-singapore': "🧳 Packing list generated. Singapore 28C humid, 2 funder meetings (smart casual), 1 dinner (smart). Drafted in your Notes.",
+    'date-night':     "🌹 Pepper checked her cal: Friday 7pm is open. Booked The Sherwood (your last 3 dates loved it). Babysitter requested · text confirmation pending.",
+    'find-gift':      "🎁 12 ideas based on her recent Instagram saves + your last 3 gift hits. Top pick: that ceramics class she keeps mentioning. Want me to book?",
+    'cook-fridge':    "🍽️ 4 recipes from what your fridge-cam sees (salmon, kale, lemon, sourdough, halloumi). Top pick: 25-min Mediterranean salmon. Walk you through it?",
+    'call-mom':       "📞 Mom's in Cairo · it's 4:12 PM there · she's usually free now. Dialing on WhatsApp video. (You haven't called in 9 days.)",
+    'movie-night':    "🎬 3 family-rated picks based on what you've all enjoyed lately. Top: 'Inside Out 2' — you missed it. Streaming on Disney+. Want me to start it at 7?",
+    'surprise-kids':  "🌟 Two options: Earnest Ice Cream (ETA 25 min, kids' favourites) OR a movie-night kit (popcorn + sodas + the new Pixar). Tap to pick.",
+    'stock-pantry':   "🛒 Weekly staples ordered from your usual Save-On-Foods cart: milk, eggs, halal chicken, sourdough, oat-milk, kids' yogurt. Delivery Tues 2-4 PM.",
+    'gym-tariq':      "💪 Tariq's free Wed 6 PM and Fri 7 AM. Sent him: 'Wed 6 sound good?' He'll see it on iMessage in 2 sec.",
+    'set-mood':       "🎵 You're at your desk Sunday morning · setting 'Sunday Strategy' playlist on Sonos · soft instrumentals · 90 min.",
+    'plan-weekend':   "🗓️ Saturday's clear. Weather: 18°C, sun. Kids high-energy (haven't done outdoor in a week). Top pick: VanDusen Garden + bakery stop. Lock it in?",
+
+    // System (queue/inbox/work)
     'approve-marp':   "✓ MARP v0.3 approved · sent to Eternal Sparks queue · Farouk + Ray notified · GitHub commit pushed.",
     'open-draft':     "Opening MARP_Events_2026/Application/draft-v0.3.md in your editor...",
     'send-as-is':     "Sending Belle's draft to Annette · Gmail · routing through yusuf@foundationforapathforward.org...",
@@ -3155,7 +3327,7 @@
 
   // Welcome toast on load
   setTimeout(function () {
-    toast("Welcome back, Master Yusuf · invented-demo data · click anything to play · ⌘K for palette", { duration: 6000 });
+    toast("Welcome back, Master Yusuf · invented-demo data · click anything · ⌘K for palette · scroll to FunBrews ✨ for personal-life magic", { duration: 7000 });
   }, 700);
 
 })();

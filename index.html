@@ -122,6 +122,14 @@
     font-weight: 700;
     line-height: 1;
   }
+  /* Dropdown menu open-state: rotate chevron */
+  button[aria-expanded="true"] .dropdown-chev {
+    transform: rotate(180deg);
+  }
+  button[aria-expanded="true"] {
+    background: #1d1d28;
+    color: #e4e4e7;
+  }
   /* Screen-reader-only utility */
   .sr-only {
     position: absolute;
@@ -157,23 +165,118 @@
         <div class="text-[11px] text-ink-4">UI direction · 2026-05-17</div>
       </div>
     </div>
-    <nav class="flex gap-1 text-sm">
-      <a href="#desktop"  class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Today</a>
-      <a href="#inbox"    class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Inbox</a>
-      <a href="#claude-doing" class="rounded-lg px-3 py-1.5 text-brand-soft hover:bg-elevated">Claude doing</a>
-      <a href="#schedule" class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Schedule</a>
-      <a href="#tasks"    class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Tasks</a>
-      <a href="#chat"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Chat</a>
-      <a href="#command"  class="rounded-lg px-3 py-1.5 text-brand-soft hover:bg-elevated">⌘K</a>
-      <a href="#state"    class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Pipeline</a>
-      <a href="#cost"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Spend</a>
-      <a href="#work"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Work</a>
-      <a href="#funbrews"    class="rounded-lg px-3 py-1.5 text-warn-soft hover:bg-elevated">FunBrews ✨</a>
-      <a href="#mobile"      class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Mobile</a>
-      <a href="#memory"      class="rounded-lg px-3 py-1.5 text-ok-soft hover:bg-elevated">Memory</a>
-      <a href="#sovereignty" class="rounded-lg px-3 py-1.5 text-info-soft hover:bg-elevated">Sovereignty</a>
-      <a href="#skills"      class="rounded-lg px-3 py-1.5 text-warn-soft hover:bg-elevated">Skills</a>
+    <nav class="hidden md:flex items-center gap-1 text-sm" aria-label="Primary">
+      <!-- Primary tabs (always visible) -->
+      <a href="#desktop"   class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Today</a>
+      <a href="#inbox"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Inbox</a>
+      <a href="#schedule"  class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Schedule</a>
+      <a href="#tasks"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Tasks</a>
+      <a href="#funbrews"  class="rounded-lg px-3 py-1.5 text-warn-soft hover:bg-elevated">FunBrews ✨</a>
+
+      <!-- Work dropdown -->
+      <div class="relative">
+        <button data-dropdown="work" aria-haspopup="menu" aria-expanded="false" aria-controls="dd-work"
+                class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2 flex items-center gap-1.5">
+          Work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-3 dropdown-chev transition-transform" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="dd-work" role="menu" aria-label="Work views" class="dropdown-menu hidden absolute right-0 sm:left-0 sm:right-auto top-full mt-2 w-56 rounded-xl bg-elevated border border-line shadow-float p-1.5 z-50">
+          <a href="#state" role="menuitem" class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink-2 hover:bg-bg">
+            <span class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-ink-4" aria-hidden="true"><path d="M4 17l6-6 4 4 8-8"/></svg>
+              Pipeline
+            </span>
+            <span class="text-[10px] text-ink-4">grants + funders</span>
+          </a>
+          <a href="#cost" role="menuitem" class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink-2 hover:bg-bg">
+            <span class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-ink-4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h6"/></svg>
+              Spend
+            </span>
+            <span class="text-[10px] text-ink-4">$2.84 / $20</span>
+          </a>
+          <a href="#work" role="menuitem" class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink-2 hover:bg-bg">
+            <span class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-ink-4" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18"/></svg>
+              Terminal
+            </span>
+            <span class="text-[10px] text-ink-4">CloudCLI · tmux</span>
+          </a>
+          <a href="#claude-doing" role="menuitem" class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-ink-2 hover:bg-bg">
+            <span class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-brand-soft" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5z M2 17l10 5 10-5"/></svg>
+              Claude doing
+            </span>
+            <span class="text-[10px] text-brand-soft">live task</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- System dropdown -->
+      <div class="relative">
+        <button data-dropdown="system" aria-haspopup="menu" aria-expanded="false" aria-controls="dd-system"
+                class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2 flex items-center gap-1.5">
+          System
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-3 dropdown-chev transition-transform" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="dd-system" role="menu" aria-label="System views" class="dropdown-menu hidden absolute right-0 top-full mt-2 w-56 rounded-xl bg-elevated border border-line shadow-float p-1.5 z-50">
+          <a href="#memory" role="menuitem" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-2 hover:bg-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-ok" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            Memory
+          </a>
+          <a href="#sovereignty" role="menuitem" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-2 hover:bg-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-info" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6z"/></svg>
+            Sovereignty
+          </a>
+          <a href="#skills" role="menuitem" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-2 hover:bg-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-warn" aria-hidden="true"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
+            Skills
+          </a>
+          <div class="my-1 border-t border-line"></div>
+          <div class="px-3 py-1 text-[10px] uppercase tracking-wider text-ink-5">Demo views</div>
+          <a href="#chat" role="menuitem" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-3 hover:bg-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-ink-4" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Chat (split view)
+          </a>
+          <a href="#mobile" role="menuitem" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-ink-3 hover:bg-bg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 text-ink-4" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            Mobile preview
+          </a>
+        </div>
+      </div>
+
+      <!-- Palette opener (always rightmost) -->
+      <a href="#command" data-allow-small class="ml-2 rounded-lg px-2.5 py-1.5 bg-elevated text-brand-soft hover:bg-line flex items-center gap-1.5 text-xs">
+        <span class="font-mono">⌘K</span>
+      </a>
     </nav>
+
+    <!-- Mobile hamburger -->
+    <button id="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden size-9 rounded-lg bg-elevated flex items-center justify-center">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu sheet -->
+  <div id="mobile-menu" class="md:hidden hidden border-t border-line bg-elevated">
+    <div class="px-4 py-3 grid grid-cols-2 gap-1 text-sm">
+      <a href="#desktop"      class="rounded-lg px-3 py-2 text-ink-2 hover:bg-bg">Today</a>
+      <a href="#inbox"        class="rounded-lg px-3 py-2 text-ink-2 hover:bg-bg">Inbox</a>
+      <a href="#schedule"     class="rounded-lg px-3 py-2 text-ink-2 hover:bg-bg">Schedule</a>
+      <a href="#tasks"        class="rounded-lg px-3 py-2 text-ink-2 hover:bg-bg">Tasks</a>
+      <a href="#funbrews"     class="rounded-lg px-3 py-2 text-warn-soft hover:bg-bg col-span-2">FunBrews ✨</a>
+      <div class="col-span-2 mt-2 mb-1 px-1 text-[10px] uppercase tracking-wider text-ink-5">Work</div>
+      <a href="#state"        class="rounded-lg px-3 py-2 text-ink-3 hover:bg-bg">Pipeline</a>
+      <a href="#cost"         class="rounded-lg px-3 py-2 text-ink-3 hover:bg-bg">Spend</a>
+      <a href="#work"         class="rounded-lg px-3 py-2 text-ink-3 hover:bg-bg">Terminal</a>
+      <a href="#claude-doing" class="rounded-lg px-3 py-2 text-brand-soft hover:bg-bg">Claude doing</a>
+      <div class="col-span-2 mt-2 mb-1 px-1 text-[10px] uppercase tracking-wider text-ink-5">System</div>
+      <a href="#memory"       class="rounded-lg px-3 py-2 text-ok-soft hover:bg-bg">Memory</a>
+      <a href="#sovereignty"  class="rounded-lg px-3 py-2 text-info-soft hover:bg-bg">Sovereignty</a>
+      <a href="#skills"       class="rounded-lg px-3 py-2 text-warn-soft hover:bg-bg">Skills</a>
+      <a href="#chat"         class="rounded-lg px-3 py-2 text-ink-3 hover:bg-bg">Chat demo</a>
+      <a href="#command"      class="rounded-lg px-3 py-2 text-brand-soft hover:bg-bg col-span-2 text-center">⌘K palette</a>
+    </div>
   </div>
 </div>
 
@@ -3324,6 +3427,58 @@
       });
     }
   });
+
+  // Dropdown menus in top nav
+  function closeAllDropdowns() {
+    document.querySelectorAll('.dropdown-menu').forEach(function (m) { m.classList.add('hidden'); });
+    document.querySelectorAll('[data-dropdown]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+  }
+  document.querySelectorAll('[data-dropdown]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var menu = document.getElementById('dd-' + btn.dataset.dropdown);
+      var isOpen = !menu.classList.contains('hidden');
+      closeAllDropdowns();
+      if (!isOpen) {
+        menu.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+  // Close dropdown when clicking a menu item or outside
+  document.querySelectorAll('.dropdown-menu a').forEach(function (a) {
+    a.addEventListener('click', function () { setTimeout(closeAllDropdowns, 100); });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.dropdown-menu') && !e.target.closest('[data-dropdown]')) {
+      closeAllDropdowns();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeAllDropdowns();
+  });
+
+  // Mobile hamburger
+  var mobileToggle = document.getElementById('mobile-menu-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (mobileToggle && mobileMenu) {
+    mobileToggle.addEventListener('click', function () {
+      var isOpen = !mobileMenu.classList.contains('hidden');
+      if (isOpen) {
+        mobileMenu.classList.add('hidden');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        mobileToggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        mobileMenu.classList.add('hidden');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 
   // Welcome toast on load
   setTimeout(function () {

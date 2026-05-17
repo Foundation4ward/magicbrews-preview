@@ -43,6 +43,52 @@
   :root { color-scheme: dark; }
   html, body { background: #0b0b0f; }
   body { font-feature-settings: "ss01", "cv11"; -webkit-font-smoothing: antialiased; letter-spacing: -0.01em; }
+
+  /* ACCESSIBILITY: focus-visible globally for keyboard navigation */
+  *:focus { outline: none; }
+  *:focus-visible {
+    outline: 2px solid #9d83ff;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  button:focus-visible, a:focus-visible {
+    box-shadow: 0 0 0 4px rgba(157, 131, 255, 0.25);
+  }
+
+  /* Skip-to-main link (visible on keyboard focus) */
+  .skip-link {
+    position: fixed;
+    top: -100px;
+    left: 16px;
+    background: #7c5cff;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    z-index: 200;
+    text-decoration: none;
+    font-weight: 600;
+    transition: top 0.2s ease-out;
+  }
+  .skip-link:focus { top: 16px; }
+
+  /* Respect prefers-reduced-motion (WCAG 2.2 + iOS Accessibility) */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .live-dot { animation: none !important; box-shadow: 0 0 0 2px rgba(34,197,94,0.4); }
+  }
+
+  /* Touch-target minimum: 44×44 on coarse pointer devices (WCAG 2.2 SC 2.5.8) */
+  @media (pointer: coarse) {
+    button:not([data-allow-small]), a:not([data-allow-small]) {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
   /* Phone frame */
   .phone {
     width: 390px;
@@ -66,6 +112,27 @@
   /* Soft swipe hint */
   .swipe-trail {
     background: linear-gradient(90deg, transparent 0%, rgba(34,197,94,0.12) 80%);
+  }
+  /* Task checkbox states (replaces inline styles) */
+  .task-check.task-checked {
+    background: #22c55e !important;
+    border: none !important;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  /* Screen-reader-only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>
 </head>
@@ -101,12 +168,15 @@
       <a href="#state"    class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Pipeline</a>
       <a href="#cost"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Spend</a>
       <a href="#work"     class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Work</a>
-      <a href="#mobile"   class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Mobile</a>
+      <a href="#mobile"      class="rounded-lg px-3 py-1.5 text-ink-3 hover:bg-elevated hover:text-ink-2">Mobile</a>
+      <a href="#memory"      class="rounded-lg px-3 py-1.5 text-ok-soft hover:bg-elevated">Memory</a>
+      <a href="#sovereignty" class="rounded-lg px-3 py-1.5 text-info-soft hover:bg-elevated">Sovereignty</a>
+      <a href="#skills"      class="rounded-lg px-3 py-1.5 text-warn-soft hover:bg-elevated">Skills</a>
     </nav>
   </div>
 </div>
 
-<div class="mx-auto max-w-screen-2xl px-8 py-12 space-y-24">
+<main id="main-content" class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16 sm:space-y-24">
 
 <!-- ============================================ -->
 <!-- 1. DESKTOP MORNING — the hero view            -->
@@ -137,8 +207,8 @@
       </div>
     </div>
 
-    <!-- Three-column workspace: sidebar / hero+grid / activity -->
-    <div class="grid grid-cols-[240px_1fr_360px]">
+    <!-- Three-column workspace: sidebar / hero+grid / activity (collapses on smaller viewports) -->
+    <div class="grid grid-cols-1 lg:grid-cols-[240px_1fr_360px]">
 
       <!-- LEFT SIDEBAR -->
       <aside class="border-r border-line bg-bg/30 p-5 space-y-6">
@@ -249,7 +319,7 @@
               Add
             </button>
           </div>
-          <div class="grid grid-cols-4 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3">
 
             <!-- Magic 1: Order Pizza -->
             <button class="group relative rounded-2xl bg-elevated p-5 hover:scale-[1.02] active:scale-[0.99] transition shadow-card overflow-hidden text-left">
@@ -334,7 +404,7 @@
         </div>
 
         <!-- Bento grid -->
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
           <!-- Cost card -->
           <div class="rounded-2xl bg-elevated p-5 shadow-card">
@@ -2473,32 +2543,347 @@
 </section>
 
 <!-- ============================================ -->
+<!-- 6. MEMORY (the "one thing" — cognitive memory) -->
+<!-- ============================================ -->
+<section id="memory" aria-labelledby="memory-heading">
+  <div class="mb-6">
+    <h2 id="memory-heading" class="text-xs font-medium text-ink-4 uppercase tracking-[0.18em]">Memory · how Pepper learns you over time</h2>
+    <p class="mt-1.5 text-sm text-ink-3">The biggest unlimited-resources investment: a cognitive memory hierarchy. Pepper observes; you stay in control of what's remembered.</p>
+  </div>
+
+  <div class="rounded-[28px] bg-surface shadow-float p-6 sm:p-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Procedural memory: learned preferences -->
+      <div class="rounded-2xl bg-elevated p-5 shadow-card">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="size-9 rounded-xl bg-brand/15 flex items-center justify-center" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-brand-soft"><path d="M9 12l2 2 4-4M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>
+          </div>
+          <div>
+            <div class="font-semibold">Procedural</div>
+            <div class="text-[11px] text-ink-4">learned habits, never asked</div>
+          </div>
+        </div>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-start gap-2"><span class="size-1 rounded-full bg-brand mt-2 shrink-0" aria-hidden="true"></span><span class="text-ink-2">Master Yusuf runs weekly review Sunday 6 AM. Confidence 94%.</span></li>
+          <li class="flex items-start gap-2"><span class="size-1 rounded-full bg-brand mt-2 shrink-0" aria-hidden="true"></span><span class="text-ink-2">Hates 3-hour meetings; auto-flag any invite &gt;90min.</span></li>
+          <li class="flex items-start gap-2"><span class="size-1 rounded-full bg-brand mt-2 shrink-0" aria-hidden="true"></span><span class="text-ink-2">Family breakfast call every Sunday 9 AM — never reschedule.</span></li>
+          <li class="flex items-start gap-2"><span class="size-1 rounded-full bg-brand mt-2 shrink-0" aria-hidden="true"></span><span class="text-ink-2">Funder emails: respond within 24h, drafts always cite source.</span></li>
+          <li class="flex items-start gap-2"><span class="size-1 rounded-full bg-brand mt-2 shrink-0" aria-hidden="true"></span><span class="text-ink-2">Pizza order: Mario's, 1 veggie + 1 cheese, Visa-4823.</span></li>
+        </ul>
+        <button class="mt-4 text-[11px] text-ink-4 hover:text-ink-1 underline-offset-2 hover:underline" data-allow-small>Audit + correct learnings →</button>
+      </div>
+
+      <!-- Episodic memory: searchable past -->
+      <div class="rounded-2xl bg-elevated p-5 shadow-card">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="size-9 rounded-xl bg-info/15 flex items-center justify-center" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-info"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <div>
+            <div class="font-semibold">Episodic</div>
+            <div class="text-[11px] text-ink-4">every conversation, queryable</div>
+          </div>
+        </div>
+        <div class="rounded-lg bg-bg/40 px-3 py-2 mb-3 flex items-center gap-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-3.5 text-ink-4" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <span class="text-[12px] text-ink-3 italic">"what did we decide about CRRF section 4..."</span>
+        </div>
+        <ul class="space-y-2.5 text-sm">
+          <li class="p-2.5 rounded-lg bg-bg/60">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[11px] text-info-soft">Mar 14 · Slack thread</span>
+              <span class="text-[10px] text-ink-4">95% match</span>
+            </div>
+            <p class="mt-1 text-[13px] text-ink-2">"Annette asked about partnership leverage; we landed on 2.3x blended."</p>
+          </li>
+          <li class="p-2.5 rounded-lg bg-bg/60">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[11px] text-info-soft">Mar 9 · Zoom transcript</span>
+              <span class="text-[10px] text-ink-4">87% match</span>
+            </div>
+            <p class="mt-1 text-[13px] text-ink-2">"Mariam recommended 1.2 FTE because of dual-pillar scope."</p>
+          </li>
+          <li class="p-2.5 rounded-lg bg-bg/60">
+            <div class="flex items-baseline justify-between">
+              <span class="text-[11px] text-info-soft">Feb 24 · Email · Annette</span>
+              <span class="text-[10px] text-ink-4">82% match</span>
+            </div>
+            <p class="mt-1 text-[13px] text-ink-2">"First mention of section 4 framing — pre-draft."</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Semantic memory: knowledge graph -->
+      <div class="rounded-2xl bg-elevated p-5 shadow-card">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="size-9 rounded-xl bg-ok/15 flex items-center justify-center" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-ok"><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 5h10M5 7v10M7 19h10M19 7v10"/></svg>
+          </div>
+          <div>
+            <div class="font-semibold">Semantic</div>
+            <div class="text-[11px] text-ink-4">facts + relationships</div>
+          </div>
+        </div>
+        <div class="text-sm space-y-2.5">
+          <div class="p-2.5 rounded-lg bg-bg/60">
+            <div class="text-[11px] text-ok-soft mb-0.5">FFPF · org</div>
+            <div class="text-ink-2">5 entities · 20 programs · $4.7M cumulative</div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-bg/60">
+            <div class="text-[11px] text-ok-soft mb-0.5">CRRF · funder</div>
+            <div class="text-ink-2">3 wins · $890K total · Annette Olivero · annette@crrf.ca</div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-bg/60">
+            <div class="text-[11px] text-ok-soft mb-0.5">BBBB3 · program</div>
+            <div class="text-ink-2">FFPF's main pillar · 4 wins · 2 pending</div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-bg/60">
+            <div class="text-[11px] text-ok-soft mb-0.5">Hafsa · person</div>
+            <div class="text-ink-2">wife · prefers oat-milk lattes · works Tues/Thurs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Memory controls: privacy + audit -->
+    <div class="mt-6 rounded-2xl bg-gradient-to-br from-info/10 via-info/4 to-transparent p-5 border border-info/20">
+      <div class="flex items-start gap-4">
+        <div class="size-10 rounded-xl bg-info/15 flex items-center justify-center shrink-0" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-info"><path d="M12 22a10 10 0 1 0-10-10M22 12h-4M22 12c0 5.5-4.5 10-10 10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-base font-semibold">Memory is consent-first, audit-friendly, right-to-forget honored</h3>
+          <p class="text-sm text-ink-3 mt-1">Every learned habit shows when + why Pepper inferred it. Toggle any item off → cryptographically deleted, not just hidden. Audit log timestamps every observation; you can prove what Pepper knows and doesn't.</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button class="rounded-lg bg-elevated px-3 py-1.5 text-xs hover:bg-line">Open audit log</button>
+            <button class="rounded-lg bg-elevated px-3 py-1.5 text-xs hover:bg-line">Pause learning</button>
+            <button class="rounded-lg bg-alert/15 hover:bg-alert/25 text-alert-soft px-3 py-1.5 text-xs">Forget everything from last 7d</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 7. SOVEREIGNTY (privacy/audit/zero-knowledge) -->
+<!-- ============================================ -->
+<section id="sovereignty" aria-labelledby="sovereignty-heading">
+  <div class="mb-6">
+    <h2 id="sovereignty-heading" class="text-xs font-medium text-ink-4 uppercase tracking-[0.18em]">Sovereignty · where this data lives</h2>
+    <p class="mt-1.5 text-sm text-ink-3">PII routes local. Audit log is cryptographically signed. Right-to-delete is real.</p>
+  </div>
+
+  <div class="rounded-[28px] bg-surface shadow-float p-6 sm:p-10">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
+      <main>
+        <h3 class="text-sm font-semibold text-ink-2 mb-3">Current routing · last 24h</h3>
+        <div class="space-y-2">
+          <div class="rounded-2xl bg-elevated p-4 flex items-center gap-4">
+            <div class="size-10 rounded-xl bg-ok/15 flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-ok"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-baseline justify-between">
+                <span class="font-medium">Local (Ollama · BRAIN)</span>
+                <span class="font-mono text-sm tabular-nums">147 prompts</span>
+              </div>
+              <p class="text-[12px] text-ink-4 mt-0.5">Gmail triage, contact extraction, prospect.md PII parsing — never left your network.</p>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-elevated p-4 flex items-center gap-4">
+            <div class="size-10 rounded-xl bg-brand/15 flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-brand-soft"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-baseline justify-between">
+                <span class="font-medium">Anthropic (cloud)</span>
+                <span class="font-mono text-sm tabular-nums">23 prompts</span>
+              </div>
+              <p class="text-[12px] text-ink-4 mt-0.5">Belle drafts, Marlin scoring, complex prose — sent with PII scrubbed per policy.</p>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-elevated p-4 flex items-center gap-4">
+            <div class="size-10 rounded-xl bg-info/15 flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-info"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2c2.5 2.5 4 6 4 10s-1.5 7.5-4 10c-2.5-2.5-4-6-4-10s1.5-7.5 4-10z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-baseline justify-between">
+                <span class="font-medium">OpenAI (cloud)</span>
+                <span class="font-mono text-sm tabular-nums">4 prompts</span>
+              </div>
+              <p class="text-[12px] text-ink-4 mt-0.5">Vision (portal screenshots), embeddings · short-cycle, no retention contract.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold text-ink-2 mt-6 mb-3">Audit log · cryptographically signed</h3>
+        <div class="rounded-2xl bg-elevated overflow-hidden">
+          <table class="w-full text-[12px]">
+            <thead class="bg-bg/50 text-[10px] uppercase tracking-wider text-ink-4">
+              <tr><th class="text-left px-3 py-2">Time</th><th class="text-left px-3 py-2">Actor</th><th class="text-left px-3 py-2">Action</th><th class="text-left px-3 py-2">Sig</th></tr>
+            </thead>
+            <tbody class="font-mono">
+              <tr class="border-t border-line"><td class="px-3 py-2">06:42</td><td class="px-3 py-2 text-brand-soft">Pepper</td><td class="px-3 py-2 text-ink-2">read CRRF email · annette@crrf.ca</td><td class="px-3 py-2 text-ok">✓ a4f2…</td></tr>
+              <tr class="border-t border-line"><td class="px-3 py-2">06:14</td><td class="px-3 py-2 text-warn-soft">Belle</td><td class="px-3 py-2 text-ink-2">drafted MARP reply · 5 citations</td><td class="px-3 py-2 text-ok">✓ b8d1…</td></tr>
+              <tr class="border-t border-line"><td class="px-3 py-2">04:42</td><td class="px-3 py-2 text-warn-soft">Belle</td><td class="px-3 py-2 text-ink-2">opened draft-v0.3.md</td><td class="px-3 py-2 text-ok">✓ 3e7c…</td></tr>
+              <tr class="border-t border-line"><td class="px-3 py-2">02:00</td><td class="px-3 py-2 text-brand-soft">Erica</td><td class="px-3 py-2 text-ink-2">sweep · 47 sources · 6 APPROVE</td><td class="px-3 py-2 text-ok">✓ 9a2f…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+
+      <aside class="space-y-4">
+        <div class="rounded-2xl bg-elevated p-5">
+          <div class="text-[11px] uppercase tracking-wider text-ok-soft mb-2">Right to forget</div>
+          <h3 class="font-semibold">Delete is cryptographic</h3>
+          <p class="text-[12px] text-ink-3 mt-1.5 leading-relaxed">When you delete a memory, Pepper's signing key for that record is rotated. The data is mathematically inaccessible — even if someone has the disk image.</p>
+          <button class="mt-3 w-full rounded-lg bg-alert/15 hover:bg-alert/25 text-alert-soft px-3 py-2 text-xs font-medium">Forget a person · contact · grant</button>
+        </div>
+        <div class="rounded-2xl bg-elevated p-5">
+          <div class="text-[11px] uppercase tracking-wider text-info-soft mb-2">For compliance</div>
+          <h3 class="font-semibold">Show-your-work mode</h3>
+          <p class="text-[12px] text-ink-3 mt-1.5 leading-relaxed">Export the full audit log + signed actions as a PDF. If a regulator asks what Pepper did with donor PII, you have the receipts.</p>
+          <button class="mt-3 w-full rounded-lg bg-elevated border border-line px-3 py-2 text-xs">Export compliance bundle</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 8. SELF-IMPROVING SKILLS                      -->
+<!-- ============================================ -->
+<section id="skills" aria-labelledby="skills-heading">
+  <div class="mb-6">
+    <h2 id="skills-heading" class="text-xs font-medium text-ink-4 uppercase tracking-[0.18em]">Skills · self-improving, version-controlled</h2>
+    <p class="mt-1.5 text-sm text-ink-3">Each skill is a SKILL.md in your repo. Pepper proposes upgrades when she notices your edits cluster. You merge.</p>
+  </div>
+
+  <div class="rounded-[28px] bg-surface shadow-float p-6 sm:p-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <div class="rounded-2xl bg-elevated p-5 shadow-card">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="size-9 rounded-xl bg-brand/15 flex items-center justify-center font-semibold text-brand-soft" aria-hidden="true">B</div>
+            <div>
+              <h3 class="font-semibold">grants-ops</h3>
+              <p class="text-[11px] text-ink-4 font-mono">v1.2 · stable</p>
+            </div>
+          </div>
+          <span class="text-[10px] px-2 py-0.5 rounded-md bg-ok/15 text-ok-soft">7 wins</span>
+        </div>
+        <p class="text-[12px] text-ink-3 leading-relaxed">Erica + Pike + Marlin + Belle + Barracuda + Coco + Guppy. 12 grant lifecycle stages.</p>
+        <div class="mt-3 pt-3 border-t border-line">
+          <div class="flex items-center gap-2 text-[11px]">
+            <span class="size-1.5 rounded-full bg-warn live-dot" aria-hidden="true"></span>
+            <span class="text-warn-soft font-medium">v1.3 proposed</span>
+          </div>
+          <p class="text-[11px] text-ink-3 mt-1">"Shorten equity paragraph by 30% — noticed across 17 of your recent edits to Belle drafts."</p>
+          <div class="mt-2 flex gap-1.5">
+            <button class="rounded-md bg-ok/15 text-ok-soft px-2.5 py-1 text-[11px]">Diff + merge</button>
+            <button class="rounded-md bg-elevated text-ink-3 px-2.5 py-1 text-[11px]">Decline</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-elevated p-5 shadow-card">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="size-9 rounded-xl bg-warn/15 flex items-center justify-center font-semibold text-warn-soft" aria-hidden="true">D</div>
+            <div>
+              <h3 class="font-semibold">donor-stewardship</h3>
+              <p class="text-[11px] text-ink-4 font-mono">v0.4 · beta</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-[12px] text-ink-3 leading-relaxed">Moira touch-points, anniversary triggers, gift-acknowledgement drafts.</p>
+        <div class="mt-3 pt-3 border-t border-line text-[11px] text-ink-4">Last self-update: 9d ago · "added Q3 stewardship template after Vancouver Foundation win"</div>
+      </div>
+
+      <div class="rounded-2xl bg-elevated p-5 shadow-card">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="size-9 rounded-xl bg-info/15 flex items-center justify-center font-semibold text-info" aria-hidden="true">B</div>
+            <div>
+              <h3 class="font-semibold">board-prep</h3>
+              <p class="text-[11px] text-ink-4 font-mono">v0.2 · early</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-[12px] text-ink-3 leading-relaxed">Quarterly board pack, motion drafts, minute summaries, action-item routing.</p>
+        <div class="mt-3 pt-3 border-t border-line text-[11px] text-ink-4">Last self-update: 2d ago · "learned Norm prefers bullet motions"</div>
+      </div>
+
+      <div class="rounded-2xl bg-elevated p-5 shadow-card">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="size-9 rounded-xl bg-ok/15 flex items-center justify-center font-semibold text-ok" aria-hidden="true">P</div>
+            <div>
+              <h3 class="font-semibold">personal-life</h3>
+              <p class="text-[11px] text-ink-4 font-mono">v0.7 · stable</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-[12px] text-ink-3 leading-relaxed">Magic buttons: pizza, text wife, weekly review, pack-for-trip. Learns from acceptance.</p>
+        <div class="mt-3 pt-3 border-t border-line text-[11px] text-ink-4">Last self-update: today · "you accepted 'text wife at landing' 6/6 times — promoting to auto-suggest"</div>
+      </div>
+
+      <div class="rounded-2xl bg-elevated p-5 shadow-card opacity-60">
+        <div class="flex items-start justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="size-9 rounded-xl bg-ink-3 flex items-center justify-center font-semibold text-ink-4" aria-hidden="true">F</div>
+            <div>
+              <h3 class="font-semibold">funder-correspondence</h3>
+              <p class="text-[11px] text-ink-4 font-mono">v0.1 · stub</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-[12px] text-ink-3 leading-relaxed">Belle reply drafts, citation verification, voice-matching. Waiting on dual-pillar training data.</p>
+      </div>
+
+      <button class="rounded-2xl bg-elevated/40 border-2 border-dashed border-line p-5 hover:bg-elevated text-left" data-allow-small>
+        <div class="size-9 rounded-xl bg-line flex items-center justify-center text-ink-3 mb-3" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" class="size-5"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+        <h3 class="font-semibold text-ink-2">New skill pack</h3>
+        <p class="text-[12px] text-ink-4 mt-1">Pepper interviews you for 5 minutes, generates a stub, you refine.</p>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
 <!-- Footer                                        -->
 <!-- ============================================ -->
 <footer class="border-t border-line pt-8 pb-4 text-sm text-ink-4 leading-relaxed">
-  <div class="flex items-center justify-between">
-    <p>2026 redesign · Inter type, indigo-cyan accent, soft elevation, Apple-Health-style rings, Google-search-style hero</p>
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+    <p>2026 redesign · WCAG 2.2 AA pass · responsive sm/md/lg · Memory-first AI</p>
     <p class="text-xs text-ink-5 tabular-nums">mockups/index.html · Foundation4ward/magicbrews</p>
   </div>
 </footer>
 
 </div>
 
-<!-- Toast notification -->
-<div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] pointer-events-none opacity-0 transition-opacity duration-300">
+<!-- Toast notification (role=status for screen readers) -->
+<div id="toast" role="status" aria-live="polite" aria-atomic="true" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] pointer-events-none opacity-0 transition-opacity duration-300 max-w-[calc(100vw-2rem)]">
   <div class="rounded-2xl bg-elevated border border-line shadow-float px-5 py-3 max-w-md text-sm flex items-center gap-3">
-    <span class="size-2 rounded-full bg-ok live-dot"></span>
+    <span class="size-2 rounded-full bg-ok live-dot" aria-hidden="true"></span>
     <span id="toast-msg" class="text-ink-1">Action triggered.</span>
   </div>
 </div>
 
-<!-- Cmd+K palette modal -->
-<div id="palette" class="fixed inset-0 z-[90] hidden items-start justify-center bg-black/60 backdrop-blur-md pt-20">
-  <div class="w-[640px] rounded-2xl bg-elevated shadow-float overflow-hidden border border-line">
+<!-- Cmd+K palette modal (role=dialog) -->
+<div id="palette" role="dialog" aria-modal="true" aria-labelledby="palette-label" class="fixed inset-0 z-[90] hidden items-start justify-center bg-black/60 backdrop-blur-md pt-20 px-4">
+  <div class="w-full max-w-[640px] rounded-2xl bg-elevated shadow-float overflow-hidden border border-line">
     <div class="px-5 py-4 border-b border-line flex items-center gap-3">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-ink-4"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-      <input id="palette-input" type="text" placeholder="Search or tell Claude what to do..." class="flex-1 bg-transparent border-0 outline-none text-base placeholder:text-ink-4" />
-      <button id="palette-close" class="size-7 rounded-md bg-line text-[10px] font-mono text-ink-3 flex items-center justify-center">esc</button>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-ink-4" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <label id="palette-label" for="palette-input" class="sr-only">Search or tell Claude what to do</label>
+      <input id="palette-input" type="text" placeholder="Search or tell Claude what to do..." class="flex-1 bg-transparent border-0 outline-none text-base placeholder:text-ink-4" data-allow-small />
+      <button id="palette-close" aria-label="Close palette" class="size-7 rounded-md bg-line text-[10px] font-mono text-ink-3 flex items-center justify-center" data-allow-small>esc</button>
     </div>
     <div class="py-2 max-h-[420px] overflow-y-auto">
       <div class="px-4 py-2 text-[10px] uppercase tracking-wider text-ink-4">Try</div>
@@ -2640,19 +3025,93 @@
     if (e.key === 'Escape') closePalette();
   });
 
-  // Filter chips visual feedback
+  // Account filter chips — actually filter the email list
+  function getAccountFromChipText(text) {
+    if (/All ·/.test(text)) return 'all';
+    if (/FFPF ·/.test(text)) return 'ffpf';
+    if (/Personal ·/.test(text)) return 'personal';
+    if (/Outlook ·/.test(text)) return 'outlook';
+    if (/Proton ·/.test(text)) return 'proton';
+    if (/FFPF Main/.test(text)) return 'ffpf-main';
+    if (/Eternal Sparks/.test(text)) return 'eternal-sparks';
+    if (/CIC/.test(text)) return 'cic';
+    return null;
+  }
+
+  // Tag email rows with data-account based on their "to" line
+  document.querySelectorAll('section#inbox ul li').forEach(function (li) {
+    var text = li.textContent;
+    if (/yusuf@foundationforapathforward/.test(text)) li.dataset.account = 'ffpf';
+    else if (/yusufserag@gmail/.test(text)) li.dataset.account = 'personal';
+    else if (/yusuf\.s@outlook/.test(text)) li.dataset.account = 'outlook';
+    else if (/yusuf@proton/.test(text)) li.dataset.account = 'proton';
+  });
+
   document.querySelectorAll('button').forEach(function (btn) {
-    if (/(All ·|FFPF ·|Personal ·|Outlook ·|Proton ·|FFPF Main|Eternal Sparks|CIC|All · 28|All · 37)/.test(btn.textContent || '')) {
+    var label = btn.textContent || '';
+    if (getAccountFromChipText(label) !== null) {
+      btn.setAttribute('aria-pressed', 'false');
       btn.addEventListener('click', function () {
         var siblings = Array.from(btn.parentElement.querySelectorAll('button'));
         siblings.forEach(function (s) {
           s.classList.remove('bg-elevated', 'text-ink-1');
           s.classList.add('text-ink-3');
+          s.setAttribute('aria-pressed', 'false');
         });
         btn.classList.remove('text-ink-3');
         btn.classList.add('bg-elevated', 'text-ink-1');
+        btn.setAttribute('aria-pressed', 'true');
+
+        // ACTUALLY filter
+        var account = getAccountFromChipText(label);
+        var inbox = document.querySelector('section#inbox');
+        if (inbox && account) {
+          inbox.querySelectorAll('[data-account]').forEach(function (row) {
+            if (account === 'all') {
+              row.style.display = '';
+            } else {
+              row.style.display = (row.dataset.account === account) ? '' : 'none';
+            }
+          });
+        }
+        toast("Filtered to " + account + " · " + (account === 'all' ? 'all 37 emails' : 'matching rows shown'));
       });
     }
+  });
+
+  // Cmd+K palette: filter items as you type
+  var paletteInput = document.getElementById('palette-input');
+  if (paletteInput) {
+    paletteInput.addEventListener('input', function (e) {
+      var q = e.target.value.toLowerCase();
+      document.querySelectorAll('#palette ul li').forEach(function (li) {
+        var text = li.textContent.toLowerCase();
+        li.style.display = (q === '' || text.indexOf(q) !== -1) ? '' : 'none';
+      });
+    });
+  }
+
+  // Auto-aria for icon-only buttons (a11y rescue)
+  document.querySelectorAll('button').forEach(function (btn) {
+    var text = btn.textContent.trim();
+    if (!text && !btn.hasAttribute('aria-label')) {
+      // Try to derive from context
+      var dataMagic = btn.dataset.magic;
+      if (dataMagic) {
+        btn.setAttribute('aria-label', dataMagic.replace(/-/g, ' '));
+      } else if (btn.classList.contains('proposal-btn')) {
+        btn.setAttribute('aria-label', btn.dataset.kind === 'accept' ? 'Accept proposal' : 'Reject proposal');
+      } else {
+        // Look at sibling context
+        var sib = btn.previousElementSibling || btn.nextElementSibling || btn.parentElement;
+        var sibText = sib && sib.textContent ? sib.textContent.trim().slice(0, 40) : '';
+        btn.setAttribute('aria-label', sibText ? 'Action: ' + sibText : 'Icon button');
+      }
+    }
+    // Mark all SVG children as decorative
+    btn.querySelectorAll('svg').forEach(function (svg) {
+      if (!svg.hasAttribute('aria-hidden')) svg.setAttribute('aria-hidden', 'true');
+    });
   });
 
   // Tag Pepper-proposes accept/reject pairs
@@ -2669,24 +3128,25 @@
     }
   });
 
-  // Task checkbox toggles (use textContent, no innerHTML)
+  // Task checkbox toggles (proper class-based, with aria-checked)
   document.querySelectorAll('section#tasks button').forEach(function (btn) {
     if (btn.className && /rounded-full/.test(btn.className) && /border-/.test(btn.className) && btn.children.length === 0) {
+      btn.setAttribute('role', 'checkbox');
+      btn.setAttribute('aria-checked', 'false');
+      btn.setAttribute('aria-label', 'Toggle task complete');
+      btn.classList.add('task-check');
       btn.addEventListener('click', function () {
-        if (btn.dataset.checked === '1') {
+        var checked = btn.dataset.checked === '1';
+        if (checked) {
           btn.dataset.checked = '';
-          btn.classList.remove('bg-ok');
-          btn.classList.add('border-2', 'border-ink-5');
+          btn.classList.remove('task-checked');
+          btn.setAttribute('aria-checked', 'false');
           btn.textContent = '';
         } else {
           btn.dataset.checked = '1';
-          btn.classList.add('bg-ok');
-          btn.classList.remove('border-2', 'border-ink-5');
+          btn.classList.add('task-checked');
+          btn.setAttribute('aria-checked', 'true');
           btn.textContent = '✓';
-          btn.style.color = 'white';
-          btn.style.fontSize = '12px';
-          btn.style.fontWeight = '700';
-          btn.style.lineHeight = '1';
         }
         toast("Task toggled · Pepper synced ClickUp.");
       });

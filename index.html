@@ -2483,5 +2483,223 @@
 </footer>
 
 </div>
+
+<!-- Toast notification -->
+<div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] pointer-events-none opacity-0 transition-opacity duration-300">
+  <div class="rounded-2xl bg-elevated border border-line shadow-float px-5 py-3 max-w-md text-sm flex items-center gap-3">
+    <span class="size-2 rounded-full bg-ok live-dot"></span>
+    <span id="toast-msg" class="text-ink-1">Action triggered.</span>
+  </div>
+</div>
+
+<!-- Cmd+K palette modal -->
+<div id="palette" class="fixed inset-0 z-[90] hidden items-start justify-center bg-black/60 backdrop-blur-md pt-20">
+  <div class="w-[640px] rounded-2xl bg-elevated shadow-float overflow-hidden border border-line">
+    <div class="px-5 py-4 border-b border-line flex items-center gap-3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5 text-ink-4"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input id="palette-input" type="text" placeholder="Search or tell Claude what to do..." class="flex-1 bg-transparent border-0 outline-none text-base placeholder:text-ink-4" />
+      <button id="palette-close" class="size-7 rounded-md bg-line text-[10px] font-mono text-ink-3 flex items-center justify-center">esc</button>
+    </div>
+    <div class="py-2 max-h-[420px] overflow-y-auto">
+      <div class="px-4 py-2 text-[10px] uppercase tracking-wider text-ink-4">Try</div>
+      <ul class="px-2 space-y-0.5">
+        <li><button data-magic="text-wife" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-line flex items-center gap-3"><span class="text-xl">☕</span><span>Text wife for coffee</span></button></li>
+        <li><button data-magic="order-pizza" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-line flex items-center gap-3"><span class="text-xl">🍕</span><span>Order pizza</span></button></li>
+        <li><button data-magic="weekly-review" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-line flex items-center gap-3"><span class="text-xl">📊</span><span>Run my weekly review</span></button></li>
+        <li><button data-magic="approve-marp" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-line flex items-center gap-3"><span class="text-xl">✓</span><span>Approve MARP v0.3 and send to ES queue</span></button></li>
+        <li><button data-magic="pack-singapore" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-line flex items-center gap-3"><span class="text-xl">🧳</span><span>Pack for Singapore</span></button></li>
+      </ul>
+    </div>
+    <div class="px-4 py-2.5 border-t border-line bg-bg/50 flex items-center justify-between text-[11px] text-ink-4">
+      <div class="flex items-center gap-4">
+        <span><kbd class="font-mono bg-line px-1.5 py-0.5 rounded">↑↓</kbd> nav</span>
+        <span><kbd class="font-mono bg-line px-1.5 py-0.5 rounded">↵</kbd> run</span>
+      </div>
+      <span>or just type, Master Yusuf · Pepper listens</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var toastEl = document.getElementById('toast');
+  var toastMsg = document.getElementById('toast-msg');
+  var toastTimer = null;
+
+  function toast(msg, opts) {
+    opts = opts || {};
+    toastMsg.textContent = msg;
+    toastEl.style.opacity = '1';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.style.opacity = '0'; }, opts.duration || 4500);
+  }
+
+  var MAGIC = {
+    'order-pizza':    "🍕 Pepper ordering your usual from Mario's - 1 large veggie, 1 cheese - ETA 28 min - paying with Visa ending 4823. Cancel anytime.",
+    'text-wife':      "☕ Pepper sent: 'Hey love, free for a coffee at Revolver in 25?' She read it 2 sec ago - she's typing.",
+    'weekly-review':  "📊 Pulling 7 days of CHANGELOG + runs + calendar + email. 20-line brief landing in your Drive · Briefings folder.",
+    'pack-singapore': "🧳 Packing list generated. Singapore 28C humid, 2 funder meetings (smart casual), 1 dinner (smart). Drafted in your Notes.",
+    'approve-marp':   "✓ MARP v0.3 approved · sent to Eternal Sparks queue · Farouk + Ray notified · GitHub commit pushed.",
+    'open-draft':     "Opening MARP_Events_2026/Application/draft-v0.3.md in your editor...",
+    'send-as-is':     "Sending Belle's draft to Annette · Gmail · routing through yusuf@foundationforapathforward.org...",
+    'compose':        "Pepper: 'What do you want to send, Master Yusuf?' - opening voice composer.",
+    'triage':         "Pepper re-triaging the 184 overnight emails across 20 accounts. ~3 sec.",
+    'join-zoom':      "Joining Zoom · ES Team BC Multi sync · Pepper attending silently for notes.",
+    'pepper-attends': "Pepper will attend the call, transcribe, and drop summary + action items to Drive.",
+    'reschedule':     "Moving '1pm Annette call' to tomorrow same time. Sent her your usual reschedule note.",
+    'tell-late':      "Sent your wife: 'Stuck in CRRF reading - home by 7 instead of 6. Love you.' Drafted in your voice.",
+    'summarize-week': "Composing your weekly summary now · grants, finances, ops, family · est. 20-line brief."
+  };
+
+  function runMagic(key, el) {
+    var msg = MAGIC[key];
+    if (msg) {
+      toast(msg);
+    } else {
+      var label = el && el.textContent ? el.textContent.trim().slice(0, 80) : 'that';
+      toast("Pepper handling: " + label + " · invented-demo mode");
+    }
+  }
+
+  var palette = document.getElementById('palette');
+  function openPalette() {
+    palette.classList.remove('hidden');
+    palette.classList.add('flex');
+    setTimeout(function () {
+      var inp = document.getElementById('palette-input');
+      if (inp) inp.focus();
+    }, 50);
+  }
+  function closePalette() {
+    palette.classList.add('hidden');
+    palette.classList.remove('flex');
+  }
+
+  document.addEventListener('click', function (e) {
+    var magicBtn = e.target.closest('[data-magic]');
+    if (magicBtn) { runMagic(magicBtn.dataset.magic, magicBtn); return; }
+
+    var proposalBtn = e.target.closest('.proposal-btn');
+    if (proposalBtn) {
+      var card = proposalBtn.closest('li');
+      if (proposalBtn.dataset.kind === 'accept') {
+        toast("✓ Done. Pepper's auto-close envelope just learned.");
+        if (card) {
+          card.style.transition = 'all 0.3s';
+          card.style.opacity = '0';
+          card.style.maxHeight = '0';
+          setTimeout(function () { card.remove(); }, 300);
+        }
+      } else {
+        toast("Skipped. Pepper won't propose this again.");
+        if (card) {
+          card.style.transition = 'all 0.3s';
+          card.style.opacity = '0.3';
+        }
+      }
+      return;
+    }
+
+    if (e.target.closest('#palette-close')) { closePalette(); return; }
+    if (e.target.id === 'palette') { closePalette(); return; }
+
+    var nav = e.target.closest('a[href="#command"]');
+    if (nav) { e.preventDefault(); openPalette(); return; }
+
+    var btn = e.target.closest('button');
+    if (btn) {
+      var text = btn.textContent.trim();
+      if (/order pizza/i.test(text))        return runMagic('order-pizza', btn);
+      if (/text wife/i.test(text))          return runMagic('text-wife', btn);
+      if (/weekly review/i.test(text))      return runMagic('weekly-review', btn);
+      if (/pack for singapore/i.test(text)) return runMagic('pack-singapore', btn);
+      if (/^approve/i.test(text))           return runMagic('approve-marp', btn);
+      if (/open draft/i.test(text))         return runMagic('open-draft', btn);
+      if (/send as-is/i.test(text))         return runMagic('send-as-is', btn);
+      if (/^compose/i.test(text))           return runMagic('compose', btn);
+      if (/^triage$/i.test(text))           return runMagic('triage', btn);
+      if (/^join$/i.test(text))             return runMagic('join-zoom', btn);
+      if (/pepper attends/i.test(text))     return runMagic('pepper-attends', btn);
+      if (/move my 1pm/i.test(text))        return runMagic('reschedule', btn);
+      if (/i.?ll be late/i.test(text))      return runMagic('tell-late', btn);
+      if (/summarize my week/i.test(text))  return runMagic('summarize-week', btn);
+      if (text.length > 0 && text.length < 200) {
+        toast("Pepper: '" + text + "' - invented-demo mode");
+        return;
+      }
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (palette.classList.contains('hidden')) openPalette(); else closePalette();
+    }
+    if (e.key === 'Escape') closePalette();
+  });
+
+  // Filter chips visual feedback
+  document.querySelectorAll('button').forEach(function (btn) {
+    if (/(All ·|FFPF ·|Personal ·|Outlook ·|Proton ·|FFPF Main|Eternal Sparks|CIC|All · 28|All · 37)/.test(btn.textContent || '')) {
+      btn.addEventListener('click', function () {
+        var siblings = Array.from(btn.parentElement.querySelectorAll('button'));
+        siblings.forEach(function (s) {
+          s.classList.remove('bg-elevated', 'text-ink-1');
+          s.classList.add('text-ink-3');
+        });
+        btn.classList.remove('text-ink-3');
+        btn.classList.add('bg-elevated', 'text-ink-1');
+      });
+    }
+  });
+
+  // Tag Pepper-proposes accept/reject pairs
+  document.querySelectorAll('section#desktop ul li').forEach(function (li) {
+    var btns = li.querySelectorAll('button');
+    if (btns.length === 2) {
+      var first = btns[0], second = btns[1];
+      if (first.querySelector('svg') && second.querySelector('svg') && !first.textContent.trim()) {
+        first.classList.add('proposal-btn');
+        first.dataset.kind = 'accept';
+        second.classList.add('proposal-btn');
+        second.dataset.kind = 'reject';
+      }
+    }
+  });
+
+  // Task checkbox toggles (use textContent, no innerHTML)
+  document.querySelectorAll('section#tasks button').forEach(function (btn) {
+    if (btn.className && /rounded-full/.test(btn.className) && /border-/.test(btn.className) && btn.children.length === 0) {
+      btn.addEventListener('click', function () {
+        if (btn.dataset.checked === '1') {
+          btn.dataset.checked = '';
+          btn.classList.remove('bg-ok');
+          btn.classList.add('border-2', 'border-ink-5');
+          btn.textContent = '';
+        } else {
+          btn.dataset.checked = '1';
+          btn.classList.add('bg-ok');
+          btn.classList.remove('border-2', 'border-ink-5');
+          btn.textContent = '✓';
+          btn.style.color = 'white';
+          btn.style.fontSize = '12px';
+          btn.style.fontWeight = '700';
+          btn.style.lineHeight = '1';
+        }
+        toast("Task toggled · Pepper synced ClickUp.");
+      });
+    }
+  });
+
+  // Welcome toast on load
+  setTimeout(function () {
+    toast("Welcome back, Master Yusuf · invented-demo data · click anything to play · ⌘K for palette", { duration: 6000 });
+  }, 700);
+
+})();
+</script>
+
 </body>
 </html>

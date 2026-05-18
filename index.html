@@ -145,17 +145,41 @@
       Brew your<br class="hidden sm:block"/> day.
     </h1>
     <p class="mt-5 sm:mt-7 max-w-2xl mx-auto text-base sm:text-xl text-ink-3 leading-relaxed">
-      MagicBrews is the alchemical workshop where your tools, your AI familiars, and your daily ops blend into one cauldron. Tap a Brew. The chain runs itself.
+      One cauldron. All your tools. Tap a Brew — AI handles the chain across email, calendar, files, payment, and a hundred more.
     </p>
     <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
       <a href="./demo.html" class="gradient-btn rounded-xl px-6 py-3.5 text-base font-semibold text-white shadow-glow w-full sm:w-auto text-center">
-        Step into the workshop →
+        Try the live demo →
       </a>
       <a href="#pricing" data-allow-small class="rounded-xl px-6 py-3.5 text-base font-medium text-ink-2 bg-elevated hover:bg-line w-full sm:w-auto text-center">
         See pricing
       </a>
     </div>
     <p class="mt-6 text-[12px] text-ink-4">No sign-up · click anything · invented ingredients so you can play freely</p>
+
+    <!-- Social proof strip -->
+    <div class="mt-10 sm:mt-12 flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-8 gap-y-3 text-[12px] text-ink-3">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2">
+          <div class="size-6 rounded-full bg-gradient-to-br from-warn to-alert ring-2 ring-bg" aria-hidden="true"></div>
+          <div class="size-6 rounded-full bg-gradient-to-br from-brand to-info ring-2 ring-bg" aria-hidden="true"></div>
+          <div class="size-6 rounded-full bg-gradient-to-br from-ok to-info ring-2 ring-bg" aria-hidden="true"></div>
+          <div class="size-6 rounded-full bg-gradient-to-br from-alert to-warn ring-2 ring-bg" aria-hidden="true"></div>
+          <div class="size-6 rounded-full bg-elevated ring-2 ring-bg flex items-center justify-center text-[9px] text-ink-3 font-semibold" aria-hidden="true">+63</div>
+        </div>
+        <span><strong class="text-ink-1">67 operators</strong> on the waitlist</span>
+      </div>
+      <div class="hidden sm:block h-4 w-px bg-line" aria-hidden="true"></div>
+      <div class="flex items-center gap-2">
+        <span class="text-warn" aria-hidden="true">★★★★★</span>
+        <span class="text-ink-3">from early access alpha</span>
+      </div>
+      <div class="hidden md:block h-4 w-px bg-line" aria-hidden="true"></div>
+      <div class="flex items-center gap-2">
+        <span class="size-1.5 rounded-full bg-ok live-dot" aria-hidden="true"></span>
+        <span>Open for indie founders, consultants, family offices, technical operators</span>
+      </div>
+    </div>
   </div>
 
   <!-- Hero: cinematic 'Pepper casting a Brew' moment -->
@@ -767,7 +791,7 @@
 
       <!-- Free / Apprentice -->
       <div class="rounded-2xl bg-elevated p-6 shadow-card flex flex-col">
-        <div class="text-xs uppercase tracking-wider text-ink-4">Apprentice</div>
+        <div class="text-xs uppercase tracking-wider text-ink-4">Apprentice <span class="text-ink-5 font-normal normal-case">· Free</span></div>
         <h3 class="text-2xl font-bold mt-1">$0<span class="text-base text-ink-4 font-normal">/mo</span></h3>
         <p class="text-sm text-ink-3 mt-2">Get into the workshop. See if it brews for you.</p>
         <ul class="mt-5 space-y-2 text-sm flex-1">
@@ -785,7 +809,7 @@
 
       <!-- Solo / Adept -->
       <div class="rounded-2xl bg-elevated p-6 shadow-card flex flex-col">
-        <div class="text-xs uppercase tracking-wider text-ink-4">Adept</div>
+        <div class="text-xs uppercase tracking-wider text-ink-4">Adept <span class="text-ink-5 font-normal normal-case">· Solo</span></div>
         <h3 class="text-2xl font-bold mt-1">$49<span class="text-base text-ink-4 font-normal monthly-price">/mo</span><span class="text-base text-ink-4 font-normal yearly-price hidden">$39/mo · yearly</span></h3>
         <p class="text-sm text-ink-3 mt-2">For one operator. Bring your own Anthropic key.</p>
         <ul class="mt-5 space-y-2 text-sm flex-1">
@@ -804,7 +828,7 @@
       <!-- Pro / Sorcerer (Most popular) -->
       <div class="rounded-2xl p-6 shadow-float flex flex-col relative bg-gradient-to-b from-brand/12 to-elevated border-2 border-brand/40">
         <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-brand to-info text-white text-[11px] font-semibold px-3 py-1 shadow-glow">Most popular</div>
-        <div class="text-xs uppercase tracking-wider text-brand-soft">Sorcerer</div>
+        <div class="text-xs uppercase tracking-wider text-brand-soft">Sorcerer <span class="text-brand-soft/70 font-normal normal-case">· Pro</span></div>
         <h3 class="text-2xl font-bold mt-1">$149<span class="text-base text-ink-4 font-normal monthly-price">/mo</span><span class="text-base text-ink-4 font-normal yearly-price hidden">$119/mo · yearly</span></h3>
         <p class="text-sm text-ink-3 mt-2">For solo founders + small teams. Managed AI included.</p>
         <ul class="mt-5 space-y-2 text-sm flex-1">
@@ -822,7 +846,7 @@
 
       <!-- Org / Grandmaster -->
       <div class="rounded-2xl bg-elevated p-6 shadow-card flex flex-col">
-        <div class="text-xs uppercase tracking-wider text-ink-4">Grandmaster</div>
+        <div class="text-xs uppercase tracking-wider text-ink-4">Grandmaster <span class="text-ink-5 font-normal normal-case">· Team</span></div>
         <h3 class="text-2xl font-bold mt-1">$499<span class="text-base text-ink-4 font-normal monthly-price">/mo</span><span class="text-base text-ink-4 font-normal yearly-price hidden">$399/mo · yearly</span></h3>
         <p class="text-sm text-ink-3 mt-2">For teams + regulated orgs. Custom workflows, audit retention, SSO.</p>
         <ul class="mt-5 space-y-2 text-sm flex-1">
@@ -943,7 +967,7 @@
   </div>
   <div class="border-t border-line">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-ink-4">
-      <span>© 2026 MagicBrews · Built by Master Yusuf Siraj</span>
+      <span>© 2026 MagicBrews · Built by Yusuf Siraj</span>
       <div class="flex items-center gap-4">
         <a href="#" class="hover:text-ink-2">Privacy</a>
         <a href="#" class="hover:text-ink-2">Terms</a>

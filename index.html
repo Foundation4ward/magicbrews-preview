@@ -42,8 +42,8 @@
 </script>
 <style>
   :root { color-scheme: dark; }
-  html { scroll-behavior: smooth; }
-  body { font-feature-settings: "ss01", "cv11"; -webkit-font-smoothing: antialiased; letter-spacing: -0.02em; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { font-feature-settings: "ss01", "cv11"; -webkit-font-smoothing: antialiased; letter-spacing: -0.02em; overflow-x: clip; }
   /* Accessibility */
   *:focus { outline: none; }
   *:focus-visible { outline: 2px solid #9d83ff; outline-offset: 3px; border-radius: 8px; }
@@ -142,10 +142,10 @@
       <span class="size-1.5 rounded-full bg-ok" aria-hidden="true"></span>
       <span>Early access · indie hackers · solo founders · consultants · operators</span>
     </div>
-    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
+    <h1 id="hero-h1" class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
       Brew your<br class="hidden sm:block"/> day.
     </h1>
-    <p class="mt-5 sm:mt-7 max-w-2xl mx-auto text-base sm:text-xl text-ink-3 leading-relaxed">
+    <p id="hero-sub" class="mt-5 sm:mt-7 max-w-2xl mx-auto text-base sm:text-xl text-ink-3 leading-relaxed">
       One cauldron. All your tools. Tap a Brew — AI handles the chain across email, calendar, files, payment, and a hundred more.
     </p>
     <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -248,7 +248,7 @@
                 <div class="size-12 sm:size-14 rounded-xl bg-white flex items-center justify-center shadow-card">
                   <img src="https://cdn.simpleicons.org/googlecalendar" alt="" width="28" height="28" loading="lazy" />
                 </div>
-                <div class="text-[10px] sm:text-[11px] text-ink-2 text-center font-medium">Calendar<br/><span class="text-ink-4 font-normal">SG events</span></div>
+                <div class="text-[10px] sm:text-[11px] text-ink-2 text-center font-medium">Calendar<br/><span class="text-ink-4 font-normal">events synced</span></div>
               </div>
 
               <!-- Tool 3: Drive -->
@@ -256,7 +256,7 @@
                 <div class="size-12 sm:size-14 rounded-xl bg-white flex items-center justify-center shadow-card">
                   <img src="https://cdn.simpleicons.org/googledrive" alt="" width="28" height="28" loading="lazy" />
                 </div>
-                <div class="text-[10px] sm:text-[11px] text-ink-2 text-center font-medium">Drive<br/><span class="text-ink-4 font-normal">v0.4 saved</span></div>
+                <div class="text-[10px] sm:text-[11px] text-ink-2 text-center font-medium">Drive<br/><span class="text-ink-4 font-normal">draft saved</span></div>
               </div>
 
               <!-- Tool 4: ClickUp -->
@@ -1174,5 +1174,33 @@
 })();
 </script>
 
+<!-- ===== H1 wedge A/B preview switch =====
+     Per docs/BILLION-DOLLAR-STRATEGY.md the hero must commit to ONE positioning wedge.
+     Preview each live by appending to the URL:
+        ?wedge=privacy   → the data-sovereignty wedge (B2B / regulated buyers)
+        ?wedge=life      → the whole-life wedge (consumer love / personal use)
+     No param = current brand line ("Brew your day."). Once you pick, hardcode the
+     chosen H1 + subhead above into #hero-h1 / #hero-sub and delete this script. -->
+<script>
+(function () {
+  var wedge = new URLSearchParams(location.search).get('wedge');
+  var variants = {
+    privacy: {
+      h1: 'The AI workshop where your data never leaves your laptop.',
+      sub: 'One workshop for your email, calendar, files, and 100+ tools — with anything private routed to on-device AI, so contracts, contacts, and client data stay on your machine. Tap a Brew. The chain runs itself.'
+    },
+    life: {
+      h1: 'One AI for your whole life — work and home.',
+      sub: 'From the investor reply to booking the sitter to remembering to call Mom — MagicBrews runs the chain across work and home. Tap a Brew; it pours through every app you already use.'
+    }
+  };
+  var v = variants[wedge];
+  if (!v) return;
+  var h1 = document.getElementById('hero-h1');
+  var sub = document.getElementById('hero-sub');
+  if (h1) h1.textContent = v.h1;
+  if (sub) sub.textContent = v.sub;
+})();
+</script>
 </body>
 </html>
